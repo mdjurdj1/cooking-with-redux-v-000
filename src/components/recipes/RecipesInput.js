@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux'
+import Recipes from './Recipes';
 import { addRecipe } from '../../actions/recipes'
+import { AddIngredients } from '../ingredients/AddIngredients'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 export class RecipesInput extends Component {
   constructor(props) {
@@ -44,8 +46,13 @@ export class RecipesInput extends Component {
   }
 }
 
-export const ConnectedRecipesInput = connect(null, mapDispatchToProps)(RecipesInput)
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ addRecipe: addRecipe }, dispatch)
 }
+
+function mapStateToProps(state){
+  return { selectedIngredients: state.recipeForm.ingredientIds }
+}
+
+export const ConnectedRecipesInput = connect(mapStateToProps, mapDispatchToProps)(RecipesInput)
